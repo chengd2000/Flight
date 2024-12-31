@@ -2,6 +2,8 @@ import React from 'react';
 import './App.css';
 
 function Businesses({ businessesData }) {
+  console.log("in businesses:");
+  console.log(businessesData.businesses);
   return (
     <ul>
       {businessesData.businesses ? businessesData.businesses.map((item) => (
