@@ -7,10 +7,6 @@ function App() {
   const [showComponent, setShowComponent] = useState(false);
   const [response, setResponse] = useState(null);
 
-  const handleClick = () => {
-    setShowComponent(true);
-  };
-
   const search = async () => {
     const num = document.getElementById("flight_num").value.replace(" ", "");
     let fetchedResponse;
@@ -22,6 +18,7 @@ function App() {
       if (fetchedResponse['response'] === "unknown callsign") {
         alert("Flight not found");
         setResponse(null);
+        document.location.reload();
       } else {
         setResponse(fetchedResponse);
         setShowComponent(true);
@@ -29,6 +26,7 @@ function App() {
     } catch (error) {
       alert("Flight not found");
       setResponse(null);
+      document.location.reload();
     }
 
     console.log(num);
@@ -41,7 +39,7 @@ function App() {
         <p className="col-form-label">Type the flight number:</p>
         <input id="flight_num" type="text" className="form-control form-control-sm" placeholder="flight number" />
         <button className="btn btn-secondary" id="search_flight" onClick={search}>Search Flight</button>
-        {/* <p id="flight_info">{response ? JSON.stringify(response, null, 2) : ""}</p> */}
+        { <p id="flight_info">{response ? JSON.stringify(response, null, 2) : ""}</p> }
         <div id="results">
           {showComponent && (
             <Suspense fallback={<div>Loading...</div>}>
