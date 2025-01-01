@@ -34,12 +34,11 @@ function App() {
   };
 
   return (
-    <div className="row g-3 align-items-center">
+    <div className="row g-3 align-items-center center-container">
       <div className="col-auto">
         <p className="col-form-label">Type the flight number:</p>
         <input id="flight_num" type="text" className="form-control form-control-sm" placeholder="flight number" />
         <button className="btn btn-secondary" id="search_flight" onClick={search}>Search Flight</button>
-        { <p id="flight_info">{response ? JSON.stringify(response, null, 2) : ""}</p> }
         <div id="results">
           {showComponent && (
             <Suspense fallback={<div>Loading...</div>}>

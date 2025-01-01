@@ -19,6 +19,12 @@ function Results({ flightData }) {
   const [showComponent4, setShowComponent4] = useState(false);
   const [response4, setResponse4] = useState(null);
   const [airlineImage, setAirlineImage] = useState("");
+  const [showComponent5, setShowComponent5] = useState(false);
+  const [response5, setResponse5] = useState(null);
+  const [showComponent6, setShowComponent6] = useState(false);
+  const [response6, setResponse6] = useState(null);
+
+  
 
   const seeBusinesses = () => {
     setShowComponent(true);
@@ -32,6 +38,13 @@ function Results({ flightData }) {
   const seeWeather = () => {
     setShowComponent4(true);
   };
+  const seeStations5 = () => {
+    setShowComponent5(true);
+  };
+  const seeWeather6 = () => {
+    setShowComponent6(true);
+  };
+
 
   useEffect(() => {
     if (flightData?.response?.flightroute?.destination?.name) {
@@ -100,6 +113,39 @@ function Results({ flightData }) {
   }, [flightData]);
 
   useEffect(() => {
+    if (flightData?.response?.flightroute?.origin?.latitude && flightData?.response?.flightroute?.origin?.longitude) {
+      const options5 = {
+        method: 'GET',
+        headers: {
+          accept: 'application/json'
+        }
+      };
+
+      fetch(`https://transit.hereapi.com/v8/stations?in=${flightData.response.flightroute.origin.latitude},${flightData.response.flightroute.origin.longitude};r=1000000&apiKey=${HEREAPIKEY}`, options5)
+        .then(response => response.json())
+        .then(data => setResponse5(data))
+        .catch(err => console.error('Error:', err));
+    }
+  }, [flightData]);
+
+  useEffect(() => {
+    if (flightData?.response?.flightroute?.origin?.latitude && flightData?.response?.flightroute?.origin?.longitude) {
+      const options6 = {
+        method: 'GET',
+        headers: {
+          accept: 'application/json'
+        }
+      };
+
+      fetch(`http://api.weatherapi.com/v1/current.json?key=${WEATHERAPIKEY}&q=${flightData.response.flightroute.origin.latitude},${flightData.response.flightroute.origin.longitude}`, options6)
+        .then(response => response.json())
+        .then(data => setResponse6(data))
+        .catch(err => console.error('Error:', err));
+    }
+  }, [flightData]);
+
+
+  useEffect(() => {
     if (flightData?.response?.flightroute?.airline?.iata) {
       fetch(`https://images.daisycon.io/airline/?width=300&height=150&iata=${flightData?.response?.flightroute?.airline?.iata}`)
         .then(response => response.url)
@@ -110,10 +156,14 @@ function Results({ flightData }) {
 
   return (
     <div>
+       <div class="center-container">
       <h2>Airline: {flightData?.response?.flightroute?.airline?.name}</h2>
       <img id="airlineLogo" src={airlineImage} alt="Airline Logo"></img>
-      <h2>
-      To: {flightData?.response?.flightroute?.origin?.name} ({flightData?.response?.flightroute?.origin?.iata_code}), {flightData?.response?.flightroute?.origin?.municipality}, {flightData?.response?.flightroute?.origin?.country_name}
+      </div>
+      <div class="row">
+        <div class="col takeoff">
+      <h2 class="airportName">
+      From: {flightData?.response?.flightroute?.origin?.name} ({flightData?.response?.flightroute?.origin?.iata_code}), {flightData?.response?.flightroute?.origin?.municipality}, {flightData?.response?.flightroute?.origin?.country_name}
       </h2>
       <button id="toBusinesses3" onClick={seeBusinesses3} className="btn btn-info">Click to view the businesses near {flightData?.response?.flightroute?.origin?.name}</button>
       <div id="businesses3">
@@ -123,7 +173,25 @@ function Results({ flightData }) {
           </Suspense>
         )}
       </div>
-      <h2>
+      <button onClick={seeStations5} className="btn btn-info">Click to view the stations near {flightData?.response?.flightroute?.origin?.name}</button>
+      <div id="stations" class="moretext">
+        {showComponent5 && (
+          <Suspense fallback={<div>Loading...</div>}>
+            <Stations stationsData={response5} />
+          </Suspense>
+        )}
+      </div>
+      <button onClick={seeWeather6} className="btn btn-info">Click to view the Weather in {flightData?.response?.flightroute?.origin?.name}</button>
+      <div id="weather" class="moretext2">
+        {showComponent6 && (
+          <Suspense fallback={<div>Loading...</div>}>
+            <Weather weatherData={response6} />
+          </Suspense>
+        )}
+      </div>
+      </div>
+      <div class="col landing">
+      <h2 class="airportName">
         To: {flightData?.response?.flightroute?.destination?.name} ({flightData?.response?.flightroute?.destination?.iata_code}), {flightData?.response?.flightroute?.destination?.municipality}, {flightData?.response?.flightroute?.destination?.country_name}
       </h2>
       <button id="toBusinesses" onClick={seeBusinesses} className="btn btn-info">Click to view the businesses near {flightData?.response?.flightroute?.destination?.name}</button>
@@ -135,7 +203,7 @@ function Results({ flightData }) {
         )}
       </div>
       <button onClick={seeStations} className="btn btn-info">Click to view the stations near {flightData?.response?.flightroute?.destination?.name}</button>
-      <div id="stations">
+      <div id="stations" class="moretext">
         {showComponent2 && (
           <Suspense fallback={<div>Loading...</div>}>
             <Stations stationsData={response2} />
@@ -143,12 +211,14 @@ function Results({ flightData }) {
         )}
       </div>
       <button onClick={seeWeather} className="btn btn-info">Click to view the Weather in {flightData?.response?.flightroute?.destination?.name}</button>
-      <div id="weather">
+      <div id="weather" class="moretext2">
         {showComponent4 && (
           <Suspense fallback={<div>Loading...</div>}>
             <Weather weatherData={response4} />
           </Suspense>
         )}
+      </div>
+      </div>
       </div>
     </div>
   );
