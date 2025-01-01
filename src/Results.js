@@ -4,11 +4,14 @@ import './App.css';
 const Businesses = React.lazy(() => import('./Businesses'));
 const Stations = React.lazy(() => import('./Stations'));
 const Weather = React.lazy(() => import('./Weather'));
+const Hotels = React.lazy(() => import('./Hotels'));
+
 
 const YELPAPIKEY = 'Ws_ZimUhQfP5i8rA11Izdf5qWxXnmH1yoSyo6TsFtvjvP1CTl3ppU2TLLa7QTyfVCZrhgCktrs99R5POi7llzKQRRm8FsOpOnSgGFwFSRIRr4-LuSxGS0y7FJuVzZ3Yx';
 const HEREAPIKEY = 'iK36yK63sjpS1Dcs0qf0bhSOBGiekuIhH81ERyUEvYY';
 const WEATHERAPIKEY = 'd3583aca99d24d799da140647243112';
-
+const AMADEUSAPIKEY='nOwBwYl3Sn2avzW08kh1AG9J2yV8O8IY';
+const AMADEUSSECRETAPIKEY='66uxFpOdbQA28W6o';
 function Results({ flightData }) {
   const [showComponent, setShowComponent] = useState(false);
   const [response, setResponse] = useState(null);
@@ -23,7 +26,8 @@ function Results({ flightData }) {
   const [response5, setResponse5] = useState(null);
   const [showComponent6, setShowComponent6] = useState(false);
   const [response6, setResponse6] = useState(null);
-
+  const [showComponent7, setShowComponent7] = useState(false);
+  const [response7, setResponse7] = useState(null);
   
 
   const seeBusinesses = () => {
@@ -43,6 +47,9 @@ function Results({ flightData }) {
   };
   const seeWeather6 = () => {
     setShowComponent6(true);
+  };
+  const seeHotels = () => {
+    setShowComponent7(true);
   };
 
 
@@ -154,6 +161,58 @@ function Results({ flightData }) {
     }
   }, [flightData]);
 
+
+
+///////////
+
+useEffect(() => {
+  if (flightData?.response?.flightroute?.destination?.name) {
+    const getToken = async () => {
+      try {
+        const response = await fetch('https://test.api.amadeus.com/v1/security/oauth2/token', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: `grant_type=client_credentials&client_id=${AMADEUSAPIKEY}&client_secret=${AMADEUSSECRETAPIKEY}`
+        });
+        const data = await response.json();
+        return data.access_token;
+      } catch (error) {
+        console.error('Error fetching access token:', error);
+      }
+    };
+
+    const fetchData = async () => {
+      const accessToken = await getToken();
+      if (accessToken) {
+        const options7 = {
+          method: 'GET',
+          headers: {
+            accept: 'application/json',
+            Authorization: `Bearer ${accessToken}`
+          }
+        };
+
+        try {
+          const response = await fetch(`https://test.api.amadeus.com/v1/reference-data/locations/hotels/by-geocode?latitude=${flightData.response.flightroute.destination.latitude}&longitude=${flightData.response.flightroute.destination.longitude}&radius=10&radiusUnit=KM&hotelSource=ALL`, options7);
+          const data = await response.json();
+          setResponse7(data);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      }
+    };
+
+    fetchData();
+  }
+}, [flightData]);
+
+
+
+
+///////////////
+
   return (
     <div>
        <div class="center-container">
@@ -215,6 +274,14 @@ function Results({ flightData }) {
         {showComponent4 && (
           <Suspense fallback={<div>Loading...</div>}>
             <Weather weatherData={response4} />
+          </Suspense>
+        )}
+      </div>
+      <button onClick={seeHotels} className="btn btn-info">Click to view the hotels near {flightData?.response?.flightroute?.destination?.name}</button>
+      <div id="hotels" class="moretext">
+        {showComponent7 && (
+          <Suspense fallback={<div>Loading...</div>}>
+            <Hotels hotelsData={response7} />
           </Suspense>
         )}
       </div>

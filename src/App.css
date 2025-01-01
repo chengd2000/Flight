@@ -86,3 +86,6 @@
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 
 }
+Hotels{ 
+   text-transform: capitalize;
+}
