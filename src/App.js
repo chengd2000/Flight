@@ -1,5 +1,7 @@
 import React, { useState, Suspense } from 'react';
 import './App.css';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 
 const Results = React.lazy(() => import('./Results'));
 

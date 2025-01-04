@@ -5,6 +5,7 @@ const Businesses = React.lazy(() => import('./Businesses'));
 const Stations = React.lazy(() => import('./Stations'));
 const Weather = React.lazy(() => import('./Weather'));
 const Hotels = React.lazy(() => import('./Hotels'));
+const Map = React.lazy(() => import('./Map'));
 
 
 const YELPAPIKEY = 'Ws_ZimUhQfP5i8rA11Izdf5qWxXnmH1yoSyo6TsFtvjvP1CTl3ppU2TLLa7QTyfVCZrhgCktrs99R5POi7llzKQRRm8FsOpOnSgGFwFSRIRr4-LuSxGS0y7FJuVzZ3Yx';
@@ -28,6 +29,8 @@ function Results({ flightData }) {
   const [response6, setResponse6] = useState(null);
   const [showComponent7, setShowComponent7] = useState(false);
   const [response7, setResponse7] = useState(null);
+  const [showComponent8, setShowComponent8] = useState(false);
+  const [response8, setResponse8] = useState(null);
   
 
   const seeBusinesses = () => {
@@ -50,6 +53,9 @@ function Results({ flightData }) {
   };
   const seeHotels = () => {
     setShowComponent7(true);
+  };
+  const seeMap = () => {
+    setShowComponent8(true);
   };
 
 
@@ -162,9 +168,6 @@ function Results({ flightData }) {
   }, [flightData]);
 
 
-
-///////////
-
 useEffect(() => {
   if (flightData?.response?.flightroute?.destination?.name) {
     const getToken = async () => {
@@ -210,8 +213,6 @@ useEffect(() => {
 
 
 
-
-///////////////
 
   return (
     <div>
@@ -286,6 +287,14 @@ useEffect(() => {
         )}
       </div>
       </div>
+      </div>
+      <button onClick={seeMap} className="btn btn-info">Click to view Map</button>
+      <div id="maps" class="moretext">
+        {showComponent8 && (
+          <Suspense fallback={<div>Loading...</div>}>
+            <Map hotelsData={response7} businessesData={response3} stationsData={response2} Destination={flightData?.response?.flightroute?.destination} Origin={flightData?.response?.flightroute?.origin}  />
+          </Suspense>
+        )}
       </div>
     </div>
   );
