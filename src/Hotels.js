@@ -8,7 +8,7 @@ function Hotels({ hotelsData }) {
   return (
     <ul>
       {hotelsData.data ? hotelsData.data.map((item) => (
-        <li key={item.hotelId}>
+        <li class="text-list" key={item.hotelId}>
           <h3 id="hotelName">{item.name}</h3>
         </li>
       )) : "there are no available hotels"}

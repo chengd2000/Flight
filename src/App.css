@@ -55,7 +55,7 @@
 }
 
 .landing{
-  background-image: url("../src/landing.jpg"); 
+  background-image: url("../photos/landing.jpg"); 
     background-repeat: no-repeat;
     background-size: 100% 100%;
     /* display: flex;
@@ -63,7 +63,7 @@
 }
 
 .takeoff{
-  background-image: url("../src/takeoff.jpg"); 
+  background-image: url("../photos/takeoff.jpg"); 
     background-repeat: no-repeat;
     background-size: 100% 100%;
     /* display: flex;
@@ -90,30 +90,6 @@ Hotels{
    text-transform: capitalize;
 }
 
-/* #map {
-  position: absolute;
-  /* top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0; 
-
-} 
-
-.marker-icon {
-  width: 18px; /* Slightly larger */
-  /* height: 18px;
-  vertical-align: middle;
-  margin-right: 8px;
-}
-
-.popup-content {
-  max-height: 350px; /* Increased max height */
-  /* overflow-y: auto;
-  padding-right: 10px; /* Added padding to avoid content overflow */
-
-
-
   #map {
     position: absolute;
     width: 100%;
@@ -133,4 +109,34 @@ Hotels{
     overflow-y: auto;
     padding-right: 10px;
   }
+
+
+  #photo {
+    background-image: url("../photos/tower.jpg");
+    background-repeat: no-repeat;
+    background-size: cover; /* מכסה את השטח באופן יחסי */
+    background-position: center; /* ממרכז את התמונה */
+    width: 100%;
+    height: 100vh; /* גובה מלא של חלון הדפדפן */
+}
+
   
+.custom-icon {
+  color: white; /* צבע האייקון הפנימי */
+}
+
+.text-list{
+  display: block;
+  width: auto; /* Keep the card width fixed */
+  height: auto;
+  background-color: rgb(216, 223, 225);
+  margin: 0 5px;
+  border-radius: 5px;
+
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  max-width: 50%;
+
+  color:black;
+
+}

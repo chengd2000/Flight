@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkflight=self.webpackChunkflight||[]).push([[620],{620:(e,t,n)=>{n.r(t),n.d(t,{default:()=>r});n(43),n(50);var c=n(579);const r=function(e){let{weatherData:t}=e;return console.log("in weather:"),console.log(t),(0,c.jsxs)("div",{children:[(0,c.jsxs)("h1",{children:[t.current.temp_c,"\xb0C, feels like ",t.current.feelslike_c,"\xb0C"]}),(0,c.jsxs)("h2",{children:["The weather is ",t.current.condition.text]}),(0,c.jsx)("img",{src:t.current.condition.icon,alt:"Weather icon"})]})}}}]);
+//# sourceMappingURL=620.346e2cbb.chunk.js.map

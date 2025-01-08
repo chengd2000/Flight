@@ -8,7 +8,7 @@ function Stations({ stationsData }) {
   return (
     <ul>
       {stationsData.stations ? stationsData.stations.map((item) => (
-        <li key={item.place.id}>
+        <li class="text-list" key={item.place.id}>
           <h3>{item.place.name}</h3>
         </li>
       )) : "there are no available stations"}
