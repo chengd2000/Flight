@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkflight=self.webpackChunkflight||[]).push([[793],{793:(e,l,t)=>{t.r(l),t.d(l,{default:()=>s});t(43),t(50);var a=t(579);const s=function(e){let{hotelsData:l}=e;return console.log("in hotels:"),console.log(l.data),(0,a.jsx)("ul",{children:l.data?l.data.map((e=>(0,a.jsx)("li",{class:"text-list",children:(0,a.jsx)("h3",{id:"hotelName",children:e.name})},e.hotelId))):"there are no available hotels"})}}}]);
+//# sourceMappingURL=793.a593b9a2.chunk.js.map
