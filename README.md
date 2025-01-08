@@ -10,3 +10,5 @@ The weather, the closest businesses bus stations, and hotels.
 
 ### to make things easy! what to do before you get to your flight, and after you land :)
 
+https://flightgisproject.netlify.app
+
